@@ -1,31 +1,20 @@
-# Node modules
-node_modules/
+import mongoose from "mongoose";
 
-# Environment variables
-.env
+const ticketSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  status: { type: String, default: "TODO" },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  assignedTo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    default: null,
+  },
+  priority: String,
+  deadline: Date,
+  helpfulNotes: String,
+  relatedSkills: [String],
+  createdAt: { type: Date, default: Date.now },
+});
 
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS-specific files
-.DS_Store
-Thumbs.db
-
-# VSCode settings
-.vscode/
-
-# Optional: ignore coverage and build directories if used
-coverage/
-dist/
-
-# Optional: Ignore lock files if using only one package manager
-# package-lock.json
-# yarn.lock
-
-# Ignore local environment files or test databases
-*.local
-*.test.db
+export default mongoose.model("Ticket", ticketSchema);
